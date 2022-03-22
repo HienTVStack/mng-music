@@ -1,0 +1,63 @@
+<div class="section section-padding-02">
+    <div class="container">
+        <div class="row">
+            <form action="/schedules/add" method="POST" style="display: flex; justify-content: space-between;">
+                <div class="col-lg-5">
+                    <div class="cart-shipping">
+                        <div class="cart-title">
+                            <h4 class="title">Đặt bài hát mới</h4>
+                            <p>Bài hát của bạn sẽ nhanh chóng được gửi đến MC</p>
+                        </div>
+                        <div class="cart-form">
+                            <p>Đặt bài hát</p>
+
+                            {{!-- <div class="single-form">
+                                <select class="select2">
+                                    <option value="0">Chọn tên bài hát</option>
+                                    <option value="1">Mình cưới nhau đi</option>
+                                    <option value="2">Đắp mộ cuộc tình</option>
+                                    <option value="3">Vợ người ta</option>
+                                    <option value="4">Anh không đòi quà</option>
+                                    <option value="5">Anh đếch cần gì nhiều ngoài em</option>
+                                    <option value="6">Thất tình</option>
+                                    <option value="7">Ly hôn</option>
+                                </select>
+                            </div> --}}
+
+                            <div class="single-form">
+                                <input class="form-control" name="nameMusic" value="{{schedule.nameMusic}}" type="text" placeholder="Hoặc nhập tên bài hát tại đây" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="cart-shipping">
+                        <div class="cart-title">
+                            <h4 class="title">Thông tin của bạn</h4>
+                            <p>Bạn vui lòng cho chúng tôi biết thông tin của bạn để giới thiệu nhé</p>
+                        </div>
+                        <div class="cart-form">
+                            <div class="single-form">
+                                <input class="form-control" name="name" value="{{schedule.name}}" type="text" placeholder="Tên của bạn là gì..." />
+                            </div>
+                            <div class="single-form">
+                                <input class="form-control" name="age" value="{{schedule.age}}" type="text" placeholder="Bạn bao nhiêu tuổi rồi" />
+                            </div>
+                            <div class="single-form">
+                                <select name="gender" class="select2">
+                                    <option value="0">Chọn giới tính</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nu">Nữ</option>
+                                </select>
+                            </div>
+                            <div class="single-form">
+                                <button class="btn btn-dark btn-hover-primary">Gửi đi</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Cart Shipping End -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
