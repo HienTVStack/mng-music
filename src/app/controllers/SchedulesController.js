@@ -26,19 +26,38 @@ class SchedulesController {
             })
             .catch(next);
     }
+    // [GET] /schedules/trash
+    trashSchedules(req, res, next) {
+        Schedule.findDeleted({})
+            .then(schedule => {
+                res.render('schedules/trash', {
+                    schedule: multipleMongooseToObject(schedule)
+                })
+            })
+            .catch(next);
+    }
+
+
     add(req, res, next) {
         const formData = req.body;
         const schedule = new Schedule(formData);
         schedule.save()
-            .then(() => res.redirect('/schedules'))
+            .then(() => res.redirect('/schedules/show'))
             .catch(error => {
 
             });
     }
     delete(req, res, next) {
-        Schedule.deleteOne({_id: req.params.id})
+        Schedule.delete({_id: req.params.id})
             .then(() => res.redirect('back'))
             .catch(next)
+    }
+
+    // [PATCH] /schedules/:id/restored
+    restore(req, res, next) {
+        Schedule.restore({_id: req.params.id})
+            .then(() => res.redirect('back'))
+            .catch(next);
     }
     // [PUT] /schedules/:id
     update(req, res, next) {

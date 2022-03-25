@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 // const slug = require('mong')
-
+const mongooseDelete = require('mongoose-delete');
 // mongoose.plugin
 const Schedule = new Schema({
     nameMusic: {type: String, default: "Chưa chọn bài hát"},
@@ -11,5 +11,10 @@ const Schedule = new Schema({
 },{
     timestamps: true
 });
+
+Schedule.plugin(mongooseDelete, {
+    deletedAt : true,
+    overrideMethods: 'all'
+})
 
 module.exports = mongoose.model('Schedule', Schedule);
