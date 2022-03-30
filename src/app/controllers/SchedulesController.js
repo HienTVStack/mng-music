@@ -18,12 +18,14 @@ class SchedulesController {
     }
     // [GET] /schedules/show
     show(req, res, next) {
-        Schedule.find({})
-            .then(schedule => {
+        Promise.all([Schedule.find({}), Schedule.countDocumentsDeleted()])
+            .then(([schedule, deletedCount]) => {
                 res.render('schedules/show', {
+                    deletedCount,
                     schedule: multipleMongooseToObject(schedule)
                 })
-            })
+                //console.log(deletedCount)
+            }) 
             .catch(next);
     }
     // [GET] /schedules/trash
@@ -73,7 +75,20 @@ class SchedulesController {
             }))
             .catch(next)
     }
-
+    // [POST] /schedules/handle-schedules-action
+    handleSchedulesAction(req, res, next) {
+        switch (req.body.action) {
+            case 'deleted':
+                Schedule.delete({_id: req.body.scheduleIds})
+                    .then(() => res.redirect('back'))
+                    .catch(next);
+                break;
+        
+            default:
+                res.redirect('back');
+                break;
+        }
+    }
 }
 
 module.exports = new SchedulesController;

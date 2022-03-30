@@ -1,10 +1,11 @@
-   <form action="" >
+   <form action="/schedules/handle-schedules-action" method="POST" >
 <div class="section section-padding-02">
     <div class="container">
         <!-- Cart Wrapper Start -->
         <div class="cart-wrapper">
-            <div class="heading">
+            <div class="heading d-flex" style="align-items: center;justify-content: space-between;">
     <a href="/schedules/trash" class="heading heading-title title">Thùng rác</a>
+    <div>Số bài hát đã hoàn thành (<span>{{deletedCount}}</span>)</div>
 </div> 
 {{!-- Checked All Submit start --}}
 <div class="form-check mt-4">
@@ -16,15 +17,15 @@
 {{!-- Checked all end --}}
 {{!-- Select option action start --}}
 <div class="mt-4">
-    <select name="action" class="" required>
+    <select class="form-select" style="max-width: 350px;" aria-label="Default select example" name="action" required>
         <option value="">-- Chọn hành động --</option>
-        <option value="delete">Delete</option>
+        <option value="deleted">Thêm vào thùng rác</option>
     </select>
-    <button class="disable mt-4" id="submit-btn">Thực hiện</button>
+    <button class="btn btn-primary btn-checked-all-submit mt-4 disabled" id="submit-btn">Thực hiện</button>
 </div>
 {{!-- Select option action end --}}
             <!-- Cart Table Start -->
-            <div class="cart-table table-responsive">
+            <div class="cart-table table-responsive mt-4">
                 <table class="table">
                     <thead>
                         <tr>
@@ -41,7 +42,7 @@
                                 <input class="form-check-input" type="checkbox" value="{{this._id}}" name="scheduleIds[]"/>
                             </td>
                             <td class="product-info">
-                                <h6 class="name"><a href="produtc-details-right-sidebar.html">{{this.nameMusic}}</a></h6>
+                                <h6 class="name"><a href="/schedules/show">{{this.nameMusic}}</a></h6>
                                 <div class="product-prices">
                                     <!-- <span class="regular-price">$35.90</span> -->
                                     <!-- <span class="sale-price">$28.72</span> -->
@@ -87,20 +88,6 @@
                         </div>
                         <div class="cart-form">
                             <p>Đặt bài hát</p>
-
-                            {{!-- <div class="single-form">
-                                <select name="nameMusic" class="select2">
-                                    <option value="0">Chọn tên bài hát</option>
-                                    <option value="Mình cưới nhau đi">Mình cưới nhau đi</option>
-                                    <option value="2">Đắp mộ cuộc tình</option>
-                                    <option value="3">Vợ người ta</option>
-                                    <option value="4">Anh không đòi quà</option>
-                                    <option value="5">Anh đếch cần gì nhiều ngoài em</option>
-                                    <option value="6">Thất tình</option>
-                                    <option value="7">Ly hôn</option>
-                                </select>
-                            </div> --}}
-
                             <div class="single-form">
                                 <input class="form-control" name="nameMusic" type="text" placeholder="Hoặc nhập tên bài hát tại đây" />
                             </div>
@@ -197,8 +184,20 @@
     });
     //Re-render button submit
     function renderButtonSubmitAction() {
-
-    }
+        var scheduleCount = $('input[name="scheduleIds[]"]:checked').length;
+        if(scheduleCount > 0) {
+            submitBtn.removeClass('disabled')
+        } else {
+            submitBtn.addClass('disabled')
+        }
+    };
+    // Remove default of button submit
+    submitBtn.on('submit', function(e) {
+        var isSubmittable = $(this).hasClass('disable');
+        if(!isSubmittable) {
+            e.preventDefault();
+        }
+    });
 
 
 </script>
