@@ -1,4 +1,4 @@
-   
+   <form action="" >
 <div class="section section-padding-02">
     <div class="container">
         <!-- Cart Wrapper Start -->
@@ -6,11 +6,29 @@
             <div class="heading">
     <a href="/schedules/trash" class="heading heading-title title">Thùng rác</a>
 </div> 
+{{!-- Checked All Submit start --}}
+<div class="form-check mt-4">
+    <input class="form-check-input" type="checkbox" value="" id="checkbox-all" />
+    <label class="form-check-label" for="checkbox-all">
+        Chọn tất cả
+    </label>
+</div>
+{{!-- Checked all end --}}
+{{!-- Select option action start --}}
+<div class="mt-4">
+    <select name="action" class="" required>
+        <option value="">-- Chọn hành động --</option>
+        <option value="delete">Delete</option>
+    </select>
+    <button class="disable mt-4" id="submit-btn">Thực hiện</button>
+</div>
+{{!-- Select option action end --}}
             <!-- Cart Table Start -->
             <div class="cart-table table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
+                            <th></th>
                             <th class="product-info">Thông tin bài hát</th>
                             <th class="product-total-price">Khách</th>
                             <th class="product-action">Chức năng</th>
@@ -19,6 +37,9 @@
                     <tbody>
                         {{#each schedule}}
                         <tr>
+                            <td>
+                                <input class="form-check-input" type="checkbox" value="{{this._id}}" name="scheduleIds[]"/>
+                            </td>
                             <td class="product-info">
                                 <h6 class="name"><a href="produtc-details-right-sidebar.html">{{this.nameMusic}}</a></h6>
                                 <div class="product-prices">
@@ -52,6 +73,8 @@
                 </table>
             </div>
         </div>
+   </form>
+
         <!-- Cart Wrapper End -->
 
         <div class="row">
@@ -145,6 +168,10 @@
     var deleteCourseModal = document.getElementById('delete-course-modal');
     var deleteForm = document.forms['delete-course-form'];
     var btnDeleteCourse = document.getElementById('btn-delete-course');
+    var checkboxAll = $('#checkbox-all');
+    var checkedSchedulesItem = $('input[name="scheduleIds[]"]');
+    var submitBtn = $('#submit-btn');
+
 
     deleteCourseModal.addEventListener('show.bs.modal', function (event) {
     var button = event.relatedTarget
@@ -155,4 +182,23 @@
         deleteForm.action = '/schedules/' + courseId + '?_method=DELETE';
         deleteForm.submit();
     };
+    //Checked box all changed
+    checkboxAll.change('checked', function() {
+        var isCheckedAll = $(this).prop('checked');
+        checkedSchedulesItem.prop('checked', isCheckedAll);
+        renderButtonSubmitAction();
+    });
+    
+    // Checked schedules item change
+    checkedSchedulesItem.change('checked', function() {
+        var isCheckedItemAll = checkedSchedulesItem.length === $('input[name="scheduleIds[]"]:checked').length;
+        checkboxAll.prop('checked', isCheckedItemAll); 
+        renderButtonSubmitAction();
+    });
+    //Re-render button submit
+    function renderButtonSubmitAction() {
+
+    }
+
+
 </script>
