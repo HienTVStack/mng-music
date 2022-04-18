@@ -1,4 +1,4 @@
-   <form action="/schedules/handle-schedules-action" method="POST" >
+   <form action="/schedules/handle-schedules-action" name="container-form" method="POST" >
 <div class="section section-padding-02">
     <div class="container">
         <!-- Cart Wrapper Start -->
@@ -75,9 +75,7 @@
             </div>
         </div>
    </form>
-
         <!-- Cart Wrapper End -->
-
         <div class="row">
             <form action="/schedules/add" method="POST" style="display: flex; justify-content: space-between;">
                 <div class="col-lg-5">
@@ -126,7 +124,6 @@
     </div>
 </div>
 
-
 {{!-- confirm delete course --}}
 <div class="modal" id="delete-course-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -158,7 +155,9 @@
     var checkboxAll = $('#checkbox-all');
     var checkedSchedulesItem = $('input[name="scheduleIds[]"]');
     var submitBtn = $('#submit-btn');
+    var containerForm = $('form[name="container-form"]');
 
+    
 
     deleteCourseModal.addEventListener('show.bs.modal', function (event) {
     var button = event.relatedTarget
@@ -192,12 +191,10 @@
         }
     };
     // Remove default of button submit
-    submitBtn.on('submit', function(e) {
-        var isSubmittable = $(this).hasClass('disable');
+    containerForm.on('submit', function(e) {
+        var isSubmittable = !submitBtn.hasClass('disable');
         if(!isSubmittable) {
             e.preventDefault();
         }
     });
-
-
 </script>

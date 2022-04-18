@@ -11,6 +11,6 @@ router.post('/handle-schedules-action', schedulesController.handleSchedulesActio
 router.delete('/:id', schedulesController.delete);
 router.patch('/:id/restored', schedulesController.restore);
 router.get('/:id/edit', schedulesController.edit);
-router.put('/:id', schedulesController.update);
+router.post('/:id', schedulesController.update);
 router.get('/', schedulesController.index);
 module.exports = router;
